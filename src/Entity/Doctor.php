@@ -19,7 +19,7 @@ class Doctor
     private ?string $specialization = null;
 
     #[ORM\OneToOne(inversedBy: 'doctor', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\OneToMany(targetEntity: Appointment::class, mappedBy: 'doctor')]

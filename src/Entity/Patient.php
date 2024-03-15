@@ -19,7 +19,7 @@ class Patient
     private ?string $social_security_number = null;
 
     #[ORM\OneToOne(inversedBy: 'patient', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\OneToMany(targetEntity: Appointment::class, mappedBy: 'patient')]
