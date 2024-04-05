@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+use App\Form\PatientType;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,12 +24,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\Regex('/^[0-9]+$/',message: "Ce champ ne peut contenir que des chiffres")]
     private ?string $phone = null;
 
     #[ORM\Column(length: 30)]
     private array $roles = [];
 
     #[ORM\Column(length: 255)]
+    /*
+    * Regex pour les conditions que j'ai imposées pour le mot de passe:
+    * mini 1 Maj
+    * mini 12 caractères
+    *
+    * */
+    #[Assert\Regex(
+        '/^(?=.*[!@#$%^&*-_])(?=.*[0-9])(?=.*[A-Z]).{12,}$/',
+        message: "Le mot de passe doit être composé d'au moins 12 caractères et contenir au moins: 1 majuscule, 1 chiffre et un caractère spécial")]
     private ?string $password = null;
 
     #[ORM\Column]
@@ -35,25 +48,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updated_at = null;
 
+
     #[ORM\Column(length: 80)]
-    private ?string $first_name = null;
+    #[Assert\Length(min: 2,minMessage: 'Ce champ doit contenir au moins 2 caractères')]
+    protected ?string $first_name = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $last_name = null;
+    #[Assert\Length(min: 2,minMessage: 'Ce champ doit contenir au moins 2 caractères')]
+    protected ?string $last_name = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Civility $civility = null;
+    #[Assert\Type(type: Civility::class)]
+    #[Assert\Valid]
+    protected?Civility $civility = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Address $address = null;
+    #[Assert\Type(type: Address::class)]
+    #[Assert\Valid]
+    protected ?Address $address = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Patient $patient = null;
+    #[Assert\Type(type: Patient::class)]
+    #[Assert\Valid]
+    protected ?Patient $patient = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Doctor $doctor = null;
+    protected ?Doctor $doctor = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_Of_Birth = null;
+    
 
     public function getId(): ?int
     {
@@ -239,6 +265,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    #[ORM\PrePersist]
+    public function setCreateAtValue(): void
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
+
+    public function getDateOfBirth(): ?\DateTimeInterface
+    {
+        return $this->date_Of_Birth;
+    }
+
+    public function setDateOfBirth(\DateTimeInterface $date_Of_Birth): static
+    {
+        $this->date_Of_Birth = $date_Of_Birth;
+
+        return $this;
+    }
+
+
 
 
 }

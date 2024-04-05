@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractController
 {
-    #[Route('/')]
+    #[Route('/',name:'app_default_home')]
+    #[Route()]
     public function home()
     {
         return $this->render('default/home.html.twig');
