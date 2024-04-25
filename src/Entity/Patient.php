@@ -17,6 +17,8 @@ class Patient
     private ?int $id = null;
 
     #[ORM\Column(length: 15)]
+    #[Assert\Length(min: 15, max: 15, minMessage: "Ce champ doit contenir exactement 15 caractères")]
+    #[Assert\Regex('/^[0-9]+$/',message: 'Ce champ ne peut contenir que des chiffres')]
     private ?string $social_security_number = null;
 
     #[ORM\OneToOne(inversedBy: 'patient', cascade: ['persist', 'remove'])]

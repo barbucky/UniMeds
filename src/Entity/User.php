@@ -23,23 +23,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 80)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 10)]
     #[Assert\Regex('/^[0-9]+$/',message: "Ce champ ne peut contenir que des chiffres")]
     private ?string $phone = null;
 
     #[ORM\Column(length: 30)]
     private array $roles = [];
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 64)]
     /*
     * Regex pour les conditions que j'ai imposées pour le mot de passe:
     * mini 1 Maj
     * mini 12 caractères
     *
     * */
-    #[Assert\Regex(
+    /*#[Assert\Regex(
         '/^(?=.*[!@#$%^&*-_])(?=.*[0-9])(?=.*[A-Z]).{12,}$/',
         message: "Le mot de passe doit être composé d'au moins 12 caractères et contenir au moins: 1 majuscule, 1 chiffre et un caractère spécial")]
+    */
     private ?string $password = null;
 
     #[ORM\Column]
@@ -51,25 +52,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 80)]
     #[Assert\Length(min: 2,minMessage: 'Ce champ doit contenir au moins 2 caractères')]
+    #[Assert\Regex(
+        '/^[a-zA-Z\'-]+$/',
+        message: "Le prénom ne peut contenir que des lettres et les caractères \" ' ou -\" ")]
     protected ?string $first_name = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\Length(min: 2,minMessage: 'Ce champ doit contenir au moins 2 caractères')]
+    #[Assert\Regex(
+        '/^[a-zA-Z\'-]+$/',
+        message: "Le nom de famille ne peut contenir que des lettres et les caractères \" ' ou -\" ")]
     protected ?string $last_name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\ManyToOne(targetEntity: Civility::class,inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Type(type: Civility::class)]
     #[Assert\Valid]
     protected?Civility $civility = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\ManyToOne(targetEntity:Address::class,inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Type(type: Address::class)]
     #[Assert\Valid]
     protected ?Address $address = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Patient::class, mappedBy: 'user', cascade: ['persist', 'remove'])]
     #[Assert\Type(type: Patient::class)]
     #[Assert\Valid]
     protected ?Patient $patient = null;
@@ -79,6 +86,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_Of_Birth = null;
+
+    public function getFullName(): string
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
+
     
 
     public function getId(): ?int
@@ -143,12 +156,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 

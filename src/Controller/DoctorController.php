@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
-class DoctorController
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class DoctorController extends AbstractController
 {
+
 
 }

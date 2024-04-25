@@ -28,18 +28,22 @@ class AppUserAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $email = $request->request->get('email', '');
+        $email = $request->getPayload()->getString('email');
+        $email = addslashes(htmlentities(trim(strip_tags($email))));
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
+        $password = $request->getPayload()->getString('password');
+        $password = addslashes(htmlentities(trim(strip_tags($password))));
 
         return new Passport(
             new UserBadge($email),
-            new PasswordCredentials($request->request->get('password', '')),
+            new PasswordCredentials($password),
             [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
                 new RememberMeBadge(),
             ]
         );
+
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
@@ -50,6 +54,7 @@ class AppUserAuthenticator extends AbstractLoginFormAuthenticator
 
         // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_default_home'));
+
     }
 
     protected function getLoginUrl(Request $request): string

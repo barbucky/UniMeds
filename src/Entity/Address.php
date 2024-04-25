@@ -72,6 +72,12 @@ class Address
 
         return $this;
     }
+    public function __toString(): string
+    {
+        return $this->street_name.', '.$this->postal_code.' '.$this->city_name;
+
+    }
+
 
     /**
      * @return Collection<int, User>

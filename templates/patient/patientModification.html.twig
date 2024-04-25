@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mise à jour du profil{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div style="height: 150px" class="row d-flex justify-content-end bg-primary">
+            <div style="width: 80px; height: 80px" class="px-0 mt-1 me-1">
+                <img  class="img-fluid rounded-circle" src="{{ asset('assets/images/defaut-avatar-profil.jpg') }}" alt="Avatar du profil">
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                {% if  app.user %}
+                    <p class="text-white text-center h1">{{ app.user.fullName }}</p>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container py-3">
+    <h3 class="text-center">Modifiez vos informations personnelles</h3>
+    <div class="col-6 mx-auto border rounded shadow p-3 my-3 ">
+        <form class="infosPatient" action="" method="post">
+            <label class="mb-2 mt-1" for="inputCivility">Civilité</label>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if app.user.civility.sexe %}Mr.{% else %}Mme.{% endif%}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li class="dropdown-item">Mr.</li>
+                    <li class="dropdown-item">Mme.</li>
+                </ul>
+            </div>
+            <div class="Form-group">
+                {{ form_row(form.Civility.sexe) }}
+            </div>
+            <div class="Form-group">
+                {{ form_row(form.last_name) }}
+            </div>
+            <div class="Form-group">
+                {{ form_row(form.Address.street_name) }}
+            </div>
+
+        </form>
+        <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-success w-50">Valider</button>
+        </div>
+    </div>
+
+{% endblock %}
