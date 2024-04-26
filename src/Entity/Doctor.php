@@ -6,6 +6,7 @@ use App\Repository\DoctorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DoctorRepository::class)]
 class Doctor
@@ -16,6 +17,8 @@ class Doctor
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\Regex('/^[a-zA-Z\'-]+$/',
+        message: "La spécialisation ne peut contenir que des lettres et les caractères \" ' ou -\" ")]
     private ?string $specialization = null;
 
     #[ORM\OneToOne(inversedBy: 'doctor', cascade: ['persist', 'remove'])]

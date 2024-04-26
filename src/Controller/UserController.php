@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Address;
 use App\Entity\Civility;
+use App\Entity\Doctor;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,6 +37,8 @@ class UserController extends AbstractController
         # 3. Je passe la requête à Symfony (handleRequest)
         # 4. Symfony me retourne mon objet rempli.
         $form = $this->createForm(UserType::class, $user);
+        $form->remove('Doctor');
+
 
         # Passer la requête au formulaire pour traitement
         $form->handleRequest($request);
@@ -98,8 +101,81 @@ class UserController extends AbstractController
     }
 
     #[Route('/inscription/Doc.html', name: 'app_inscription_doc')]
-    public function registerDoc(){
+    public function registerDoc(Request $req, UserPasswordHasherInterface $has, EntityManagerInterface $em): Response
+    {
+        $user = new User();
+        $street_name = 'Clinique du renouveau';
+        $city_name = 'LOUVROIL';
+        $postal_code = '59720';
 
+
+
+
+        $user->setRoles(['ROLE_USER', 'ROLE_DOC']);
+        $form = $this->createForm(UserType::class, $user);
+        $form->remove('Patient');
+
+
+        $form->handleRequest($req);
+
+
+        # Traitement du formulaire
+        if ($form->isSubmitted() && $form->isValid()) {
+            $civility = $user->getCivility();
+            $address = $user->getAddress();
+            $doc = $user->getDoctor();
+
+
+
+            # Uniformisation de la donnée
+            /*
+             * Forcer un format identique de données pour limiter les failles dans la BDD
+             * Puis->ucwords: Passe la première lettre de chaque mot en maj.
+             * addslashes: échappe les caractères interprétables
+             * htmlentities: Remplace tous les caractères spéciaux par leur équivalent html
+             * trim: supprime les espaces avant et après la donnée
+             * strip_tags: Supprime les balises éventuellement intégrées dans la balise
+             * */
+            $last_name = $user->getLastName();
+            $last_name = strtoupper(addslashes(htmlentities(trim(strip_tags($last_name)))));
+            $user->setLastName($last_name);
+
+            $first_name = $user->getFirstName();
+            $first_name = ucwords(addslashes(htmlentities(trim(strip_tags($first_name)))), "\ \-");
+            $user->setFirstName($first_name);
+
+            $address->setStreetName($street_name);
+            $address->setCityName($city_name);
+            $address->setPostalCode($postal_code);
+
+
+
+            $user->setAddress($address);
+
+
+            #Encodage du mot de passe
+            $hashedPassword = $has->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
+            # Sauvegarde dans ma BDD
+
+            $em->persist($address);
+            $em->persist($civility);
+            $em->persist($doc);
+            $em->persist($user);
+            $em->flush();
+
+            # Message de validation
+            $this->addFlash('success', 'Votre compte a bien été créé. Vous pouvez désormais vous connecter!');
+
+            # Redirection
+            return $this->redirectToRoute('app_login');
+
+
+        }
+        #Passage du formulaire à la vue
+        return $this->render('user/registerDoc.html.twig', [
+            'form' => $form
+        ]);
     }
 
 

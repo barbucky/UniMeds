@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Inscription professionnelle{% endblock %}
+{% block navbar %}{% endblock %}
+
+{% block body %}
+    {# raccourci pour ce qui suit =
+    .container>.row>.col-6.mx-auto>h1{Créer votre compte}
+    puis finir par la touche tab#}
+
+    <div class="container">
+        <div class="row mb-3">
+            <div class="d-flex flex-column align-items-center mt-5 col-6 ">
+                <div class="col-4">
+                    <img class="img-fluid" src="{{ asset('assets/images/UniMeds_logo.png') }}" alt="Logo UniMeds">
+                </div>
+                <div>
+                    <p class="text-center">Créez un compte et rejoingez d'autres soignants dans l'expérience UniMeds</p>
+                    <hr>
+                    <p class="text-center">Vous possédez déjà un compte?<br/>
+                        <a href={{ path('app_login')}}>Connectez-vous!</a></p>
+                </div>
+            </div>
+            <div class="col-6 border border-primary rounded-1 mt-5">
+                <h1 class="text-center mb-5">Créez votre compte</h1>
+                {{ form_start(form)}}
+
+                <div class="Form-group">
+                    {{ form_row(form.Civility.sexe) }}
+                </div>
+
+                <div class="Form-group">
+                    {{ form_row(form.last_name) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_row(form.first_name) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_row(form.date_Of_Birth) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_widget(form.Address.street_name, {'attr':{'style':'display:none', 'value':'OK'}}) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_widget(form.Address.city_name, {'attr':{'style':'display:none', 'value':'OK'}}) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_widget(form.Address.postal_code, {'attr':{'style':'display:none', 'value':'OK'}}) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_row(form.phone) }}
+                </div>
+                <div class="Form-group">
+                    {{ form_row(form.Doctor) }}
+                </div>
+
+                <div class="Form-group">
+                    {{ form_row(form.password) }}
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
+

@@ -39,6 +39,10 @@ class UserType extends AbstractType{
                     'widget'=> 'single_text',
                     'format' => 'yyyy-MM-dd',
                 ]);
+            $builder
+            ->add('Doctor', DoctorType::class, [
+                'label'=> false
+        ]);
         $builder->add('Patient', PatientType::class, [
             'label'=> false
         ])
@@ -57,8 +61,8 @@ class UserType extends AbstractType{
     ])
             ->add('submit', SubmitType::class, [
                 'label'=>'Valider'
-            ])
-        ;
+            ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
