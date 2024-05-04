@@ -2,6 +2,11 @@
 {% block title %}Mon profil{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="container-fluid">
         <div style="height: 150px" class="row d-flex-column justify-content-end bg-primary">
             <div style="width: 80px; height: 80px" class="px-0 mt-1 me-1">
@@ -26,6 +31,8 @@
                 <input type="text" readonly value= "{{ app.user.lastName }}" name="last_name" id="inputLast_name" class="form-control">
                 <label class="mb-2 mt-1" for="inputFirst_name">Prénom</label>
                 <input type="text" readonly value= "{{ app.user.firstName }}" name="fist_name" id="inputFirst_name" class="form-control">
+                <label class="mb-2 mt-1" for="inputDOB">Date de naissance</label>
+                <input type="text" readonly value= "{{ app.user.dateOfBirth|date('d/m/Y') }}" name="date_of_birth" id="inputDOB" class="form-control">
                 <label class="mb-2 mt-1" for="inputSecuSociale">N° Sécurité Sociale</label>
                 <input type="text" readonly value= "{{ app.user.patient.socialSecurityNumber }}" name="SecuSociale" id="inputSecuSociale" class="form-control">
                 <label class="mb-2 mt-1" for="inputAddress">Adresse</label>
@@ -37,7 +44,7 @@
 
             </form>
             <div class="d-flex justify-content-center mt-3">
-                <a class="w-50" href="{{ path('PatientUpdate') }}"><button class="btn btn-success w-100">Modifier</button></a>
+                <a class="w-50" href="{{ path('PatientUpdate') }}"><button class="btn vali w-100">Modifier</button></a>
             </div>
         </div>
     <h3 class="text-center">Mot de passe</h3>
@@ -46,7 +53,7 @@
             <input type="text" readonly value= "xxxxxxxxxxxxxxx" name="civility" id="inputCivility" class="form-control text-center">
         </form>
         <div class="d-flex justify-content-center mt-3">
-            <button class="btn btn-success w-50">Modifier</button>
+            <a class="w-50" href="{{ path('app_editpassword',{'id':app.user.id}) }}"><button class="btn vali w-100">Modifier</button></a>
         </div>
     </div>
 {% endblock %}

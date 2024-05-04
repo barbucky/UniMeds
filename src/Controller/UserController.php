@@ -6,6 +6,7 @@ use App\Entity\Address;
 use App\Entity\Civility;
 use App\Entity\Doctor;
 use App\Entity\User;
+use App\Form\UserPasswordType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,19 +59,19 @@ class UserController extends AbstractController
              * strip_tags: Supprime les balises éventuellement intégrées dans la balse
              * */
             $last_name=$user->getLastName();
-            $last_name=strtoupper(addslashes(htmlentities(trim(strip_tags($last_name)))));
+            $last_name=strtoupper(addslashes(htmlspecialchars(trim(strip_tags($last_name)))));
             $user->setLastName($last_name);
 
             $first_name=$user->getFirstName();
-            $first_name=ucwords(addslashes(htmlentities(trim(strip_tags($first_name)))),"\ \-");
+            $first_name=ucwords(addslashes(htmlspecialchars(trim(strip_tags($first_name)))),"\ \-");
             $user->setFirstName($first_name);
 
             $street_name = $address->getStreetName();
-            $street_name= addslashes(htmlentities(trim(strip_tags($street_name))));
+            $street_name= addslashes(htmlspecialchars(trim(strip_tags($street_name))));
             $address->setStreetName($street_name);
 
             $city_name = $address->getCityName();
-            $city_name= addslashes(htmlentities(trim(strip_tags($city_name))));
+            $city_name= addslashes(htmlspecialchars(trim(strip_tags($city_name))));
             $address->setStreetName($city_name);
 
 
@@ -132,17 +133,20 @@ class UserController extends AbstractController
              * Forcer un format identique de données pour limiter les failles dans la BDD
              * Puis->ucwords: Passe la première lettre de chaque mot en maj.
              * addslashes: échappe les caractères interprétables
-             * htmlentities: Remplace tous les caractères spéciaux par leur équivalent html
+             * htmlspecialchars: Remplace tous les caractères spéciaux par leur équivalent html
              * trim: supprime les espaces avant et après la donnée
              * strip_tags: Supprime les balises éventuellement intégrées dans la balise
              * */
             $last_name = $user->getLastName();
-            $last_name = strtoupper(addslashes(htmlentities(trim(strip_tags($last_name)))));
+            $last_name = strtoupper(addslashes(htmlspecialchars(trim(strip_tags($last_name)))));
             $user->setLastName($last_name);
 
             $first_name = $user->getFirstName();
-            $first_name = ucwords(addslashes(htmlentities(trim(strip_tags($first_name)))), "\ \-");
+            $first_name = ucwords(addslashes(htmlspecialchars(trim(strip_tags($first_name)))), "\ \-");
             $user->setFirstName($first_name);
+
+            $spe = $doc->getSpecialization();
+            $doc ->setSpecialization(strtoupper(addslashes(htmlspecialchars(trim(strip_tags($spe))))));
 
             $address->setStreetName($street_name);
             $address->setCityName($city_name);
@@ -177,6 +181,37 @@ class UserController extends AbstractController
             'form' => $form
         ]);
     }
+
+    #[Route('/mon_compte/edit_password.html/{id}', name: 'app_editpassword')]
+    public function editPassword(User $user, Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(UserPasswordType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])
+            ) {
+               $user->setPassword(
+                   $hasher->hashPassword($user,$form->getData()['newPassword']
+                   )
+               );
+               $this->addFlash('success', 'Votre mot de passe a bien été modifié.');
+
+               $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_default_home');
+            } else{
+                $this->addFlash('danger','Le mot de passe actuel renseigné est incorrect');
+            }
+        }
+
+        return $this->render('user/editPassword.html.twig',[
+            'form'=>$form
+        ]);
+
+    }
+
 
 
 }

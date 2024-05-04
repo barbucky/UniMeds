@@ -21,6 +21,8 @@
     <h3 class="text-center">Modifiez vos informations personnelles</h3>
     <div class="col-6 mx-auto border rounded shadow p-3 my-3 ">
         <form class="infosPatient" action="" method="post">
+            {{ form_start(form) }}
+            {#
             <label class="mb-2 mt-1" for="inputCivility">Civilité</label>
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,20 +33,46 @@
                     <li class="dropdown-item">Mme.</li>
                 </ul>
             </div>
-            <div class="Form-group">
+            #}
+            <div class="Form-group patmodi">
                 {{ form_row(form.Civility.sexe) }}
             </div>
-            <div class="Form-group">
+            <div class="Form-group patmodi">
                 {{ form_row(form.last_name) }}
             </div>
-            <div class="Form-group">
+            <div class="Form-group patmodi">
+                {{ form_row(form.first_name) }}
+            </div>
+            <div class="Form-group patmodi">
+                {{ form_row(form.date_Of_Birth) }}
+            </div>
+            <div class="Form-group patmodi">
+                {{ form_row(form.Patient) }}
+            </div>
+            <div class="Form-group patmodi">
                 {{ form_row(form.Address.street_name) }}
             </div>
+            <div class="Form-group patmodi">
+                {{ form_row(form.Address.city_name) }}
+            </div>
+            <div class="Form-group patmodi">
+                {{ form_row(form.Address.postal_code) }}
+            </div>
+            <div class="Form-group patmodi">
+                {{ form_row(form.email) }}
+            </div>
+            <div class="Form-group patmodi">
+                {{ form_row(form.phone) }}
+            </div>
+            <div class="Form-group ">
+                {{ form_row(form.submit, {'attr':{'class': 'btn btn-success justify-content-center w-50'}}) }}
+            </div>
+            {{ form_end(form) }}
 
         </form>
-        <div class="d-flex justify-content-center mt-3">
+        {# <div class="d-flex justify-content-center mt-3">
             <button class="btn btn-success w-50">Valider</button>
-        </div>
+        </div> #}
     </div>
 
 {% endblock %}

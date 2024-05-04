@@ -53,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 80)]
     #[Assert\Length(min: 2,minMessage: 'Ce champ doit contenir au moins 2 caractères')]
     #[Assert\Regex(
-        '/^[a-zA-Z\'-]+$/',
+        '/^[a-zA-Zéè\'-]+$/',
         message: "Le prénom ne peut contenir que des lettres et les caractères \" ' ou -\" ")]
     protected ?string $first_name = null;
 

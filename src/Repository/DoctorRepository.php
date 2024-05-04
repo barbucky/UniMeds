@@ -21,6 +21,17 @@ class DoctorRepository extends ServiceEntityRepository
         parent::__construct($registry, Doctor::class);
     }
 
+    public function getRandomDoctors (int $nombreDocs):array
+    {
+        $queryBuilder = $this->createQueryBuilder('d');
+        return $queryBuilder
+            ->setMaxResults($nombreDocs)
+            ->orderBy('RAND()')
+            ->getQuery()
+            ->getResult();
+
+    }
+
     //    /**
     //     * @return Doctor[] Returns an array of Doctor objects
     //     */
