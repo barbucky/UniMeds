@@ -24,7 +24,7 @@
     <div class="container py-3">
         <h3 class="text-center">Informations personnelles</h3>
         <div class="col-6 mx-auto border rounded shadow p-3 my-3 ">
-            <form class="infosPatient" action="">
+            <form class="infosForm" action="">
                 <label class="mb-2 mt-1" for="inputCivility">Civilité</label>
                 <input type="text" readonly value= "{% if app.user.civility.sexe %}Mr.{% else %}Mme.{% endif%}" name="civility" id="inputCivility" class="form-control">
                 <label class="mb-2 mt-1" for="inputLast_name">Nom</label>
@@ -49,7 +49,7 @@
         </div>
     <h3 class="text-center">Mot de passe</h3>
     <div class="col-6 mx-auto border rounded shadow p-3 my-3 ">
-        <form class="infosPatient" action="">
+        <form class="infosForm" action="">
             <input type="text" readonly value= "xxxxxxxxxxxxxxx" name="civility" id="inputCivility" class="form-control text-center">
         </form>
         <div class="d-flex justify-content-center mt-3">

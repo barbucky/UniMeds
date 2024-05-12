@@ -24,6 +24,7 @@ class PatientController extends AbstractController
     #[Route('/mon_compte/Patient/modification.html',name: 'PatientUpdate')]
     public function editPatient(Request $request, EntityManagerInterface $em):Response
     {
+
         $user = $this->getUser();
 
         $form = $this->createForm(UserType::class, $user);
@@ -34,12 +35,11 @@ class PatientController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()){
-            $current_date = date('d/m/y H:i');
-            echo $current_date;
-            dd($form);
 
 
+            /** @var User $user */
             $user=$form->getData();
+            $user->setUpdatedAt(new \DateTimeImmutable());
 
             $em->persist($user);
             $em->flush();

@@ -46,23 +46,15 @@
             <div class="Form-group patmodi">
                 {{ form_row(form.date_Of_Birth) }}
             </div>
-            <div class="Form-group patmodi">
-                {{ form_row(form.Patient) }}
-            </div>
-            <div class="Form-group patmodi">
-                {{ form_row(form.Address.street_name) }}
-            </div>
-            <div class="Form-group patmodi">
-                {{ form_row(form.Address.city_name) }}
-            </div>
-            <div class="Form-group patmodi">
-                {{ form_row(form.Address.postal_code) }}
-            </div>
+
             <div class="Form-group patmodi">
                 {{ form_row(form.email) }}
             </div>
             <div class="Form-group patmodi">
                 {{ form_row(form.phone) }}
+            </div>
+            <div class="Form-group patmodi">
+                {{ form_row(form.Doctor) }}
             </div>
             <div class="Form-group ">
                 {{ form_row(form.submit, {'row_attr':{'class':'d-flex justify-content-center'},'attr':{'class': 'btn vali w-50'}}) }}

@@ -30,6 +30,7 @@ class UserController extends AbstractController
         $user->setRoles(['ROLE_USER']);
 
 
+
         #Création du formulaire
         # Passer la requête au formulaire pour traitement
         # Process :
@@ -40,9 +41,10 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->remove('Doctor');
 
-
         # Passer la requête au formulaire pour traitement
         $form->handleRequest($request);
+        dd($user);
+
 
         # Traitement du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
@@ -182,19 +184,23 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/mon_compte/edit_password.html/{id}', name: 'app_editpassword')]
+    #[Route('/mon_compte/{id}/edit_password.html', name: 'app_editpassword')]
     public function editPassword(User $user, Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserPasswordType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])
             ) {
+                #Hashage du nouveau mot de passe
                $user->setPassword(
                    $hasher->hashPassword($user,$form->getData()['newPassword']
                    )
                );
+               #Update user
+               $user->setUpdatedAt(new \DateTimeImmutable());
                $this->addFlash('success', 'Votre mot de passe a bien été modifié.');
 
                $entityManager->persist($user);

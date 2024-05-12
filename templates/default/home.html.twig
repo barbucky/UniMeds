@@ -6,14 +6,22 @@
         </div>
     {% endfor %}
     <main>
+        {{ form_start(form) }}
         <div style="height: 300px" class=" d-flex bg-primary text-white">
+
             <div style= "width: 50%" class="col-6 justify-content-center align-items-center input-group mx-auto">
-                <input style="height: 20%; width: 30%" class="form-control" type="search" placeholder="🔍 Nom du médecin ou sa spécialité" aria-label="Search">
+                {{ form_widget(form.query, {'attr':{'class':'form-control', 'style':'height: 20%; width: 30%', 'placeholder':'Nom du médecin ou sa spécialité',}}) }}
+                {# <input style="height: 20%; width: 30%" class="form-control" type="search" placeholder="🔍 Nom du médecin ou sa spécialité" aria-label="Search"> #}
+                <button style="height: 20%; width: fit-content" id="search-button" type="submit" class="btn d-inline-block px-6 py-2.5 btn-danger active:shadow-lg">
+                🔍
+                </button>
             </div>
+
             <div class="col-5" >
                 <img class="h-100 w-auto img-fluid"   src="{{ asset('assets/images/isolated-1188036_1280.webp') }}" alt="image d'un médecin">
             </div>
         </div>
+        {{ form_end(form) }}
         <article class="Cadre text-center  mt-3 mx-5">
             <h2>Réservez votre rendez-vous médical</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cupiditate deleniti distinctio dolores error esse ex fuga harum illo nam nisi, perspiciatis placeat qui saepe tenetur! Eos mollitia nisi reiciendis!</p>

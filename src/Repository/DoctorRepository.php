@@ -3,8 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Doctor;
+use App\Model\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
+
 
 /**
  * @extends ServiceEntityRepository<Doctor>
@@ -30,6 +34,31 @@ class DoctorRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
+    }
+
+    /**
+     * Trouve un docteur en résultat de recherche dans le prénom, le nom ou la spécialisation du praticien
+     */
+     public function findBySearch(SearchData $searchData)
+    {
+        $doctors = $this->createQueryBuilder('p');
+            #->addOrderBy('p.','ASC');
+        if(!empty($searchData)){
+            /** @var  $expr */
+            $expr = new Expr\Func('CONCAT', array('user.first_name',' ','user.last_name')) ;
+            $doctors = $doctors
+                ->join('p.user','user')
+                ->where('p.specialization LIKE :q')
+                ->orWhere('user.first_name LIKE :q')
+                ->orWhere('user.last_name LIKE :q')
+                #->orWhere('user.first_name.' '.user.last_name LIKE :q')
+                ->setParameter('q',"%{$searchData}%");
+        }
+
+
+        return $doctors
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**
