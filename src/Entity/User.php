@@ -87,6 +87,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_Of_Birth = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $fullName = null;
+
     public function getFullName(): string
     {
         return $this->first_name.' '.$this->last_name;
@@ -293,6 +296,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateOfBirth(\DateTimeInterface $date_Of_Birth): static
     {
         $this->date_Of_Birth = $date_Of_Birth;
+
+        return $this;
+    }
+
+    public function setFullName(?string $fullName): static
+    {
+        $this->fullName = $fullName;
 
         return $this;
     }

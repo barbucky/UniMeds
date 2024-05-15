@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment
@@ -20,9 +21,6 @@ class Appointment
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $start_hour = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $end_hour = null;
-
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Patient $patient = null;
@@ -30,6 +28,9 @@ class Appointment
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Doctor $doctor = null;
+
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $status = null;
 
     public function getId(): ?int
     {
@@ -60,17 +61,6 @@ class Appointment
         return $this;
     }
 
-    public function getEndHour(): ?\DateTimeInterface
-    {
-        return $this->end_hour;
-    }
-
-    public function setEndHour(\DateTimeInterface $end_hour): static
-    {
-        $this->end_hour = $end_hour;
-
-        return $this;
-    }
 
     public function getPatient(): ?Patient
     {
@@ -92,6 +82,18 @@ class Appointment
     public function setDoctor(?Doctor $doctor): static
     {
         $this->doctor = $doctor;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

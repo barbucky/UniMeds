@@ -7,9 +7,3 @@
  */
 
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
-
-const dateAppointment= document.getElementById('appointment_date_of_appointment');
-const dateValue = dateAppointment.value;
-console.log(dateValue);
-

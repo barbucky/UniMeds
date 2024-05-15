@@ -44,14 +44,13 @@ class DoctorRepository extends ServiceEntityRepository
         $doctors = $this->createQueryBuilder('p');
             #->addOrderBy('p.','ASC');
         if(!empty($searchData)){
-            /** @var  $expr */
-            $expr = new Expr\Func('CONCAT', array('user.first_name',' ','user.last_name')) ;
+
             $doctors = $doctors
                 ->join('p.user','user')
                 ->where('p.specialization LIKE :q')
                 ->orWhere('user.first_name LIKE :q')
                 ->orWhere('user.last_name LIKE :q')
-                #->orWhere('user.first_name.' '.user.last_name LIKE :q')
+                ->orWhere('user.fullName LIKE :q')
                 ->setParameter('q',"%{$searchData}%");
         }
 

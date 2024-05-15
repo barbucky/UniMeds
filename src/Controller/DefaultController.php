@@ -23,7 +23,7 @@ class DefaultController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $docSearch = $doctorRepository->findBySearch($searchData);
 
-            return $this->render('defaut/recherche.html.twig',[
+            return $this->render('default/recherche.html.twig',[
                 'form'=>$form,
                 'docs'=>$docSearch
             ]);

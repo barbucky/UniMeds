@@ -28,14 +28,22 @@ class AppointmentType extends AbstractType
                 ]
             ])
             ->add('start_hour', TimeType::class, [
-                'widget' => 'single_text',
+                'widget' => 'choice',
                 'label'=>'Heure de la consultation:',
-                /*'hours'=>[
-                    '08'=>'08',
-
+                'hours'=>[
+                    '08'=>8,
+                    '09'=>9,
+                    '10'=>10,
+                    '11'=>11,
+                    '12'=>12,
+                    '14'=>14,
+                    '15'=>15,
+                    '16'=>16,
+                    '17'=>17,
+                    '18'=>18,
 
                 ],
-                'minutes'=>['00'=>0],*/
+                'minutes'=>['00'=>00],
                 'constraints'=>[
                     new NotNull(),
                     new NotBlank()

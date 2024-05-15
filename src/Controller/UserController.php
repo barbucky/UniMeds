@@ -67,6 +67,7 @@ class UserController extends AbstractController
             $first_name=$user->getFirstName();
             $first_name=ucwords(addslashes(htmlspecialchars(trim(strip_tags($first_name)))),"\ \-");
             $user->setFirstName($first_name);
+            $user->setFullName($first_name.' '.$last_name);
 
             $street_name = $address->getStreetName();
             $street_name= addslashes(htmlspecialchars(trim(strip_tags($street_name))));
@@ -146,6 +147,7 @@ class UserController extends AbstractController
             $first_name = $user->getFirstName();
             $first_name = ucwords(addslashes(htmlspecialchars(trim(strip_tags($first_name)))), "\ \-");
             $user->setFirstName($first_name);
+            $user->setFullName($first_name.' '.$last_name);
 
             $spe = $doc->getSpecialization();
             $doc ->setSpecialization(strtoupper(addslashes(htmlspecialchars(trim(strip_tags($spe))))));
@@ -217,6 +219,8 @@ class UserController extends AbstractController
         ]);
 
     }
+
+
 
 
 

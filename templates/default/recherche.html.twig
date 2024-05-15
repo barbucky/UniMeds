@@ -11,11 +11,12 @@
 
 
             {% if docs is not empty %}
+
                 <ul>
                     {%for doctor in docs %}
                         <li class="mb-2 linkDoc">
-                            <a href="#">{{ doctor.user.fullname }} - <span class="fst-italic">({{ doctor.specialization }})</span></a>
-                        </li>
+                            <a href="{{ path('doc_presentation',{'id':doctor.id})}}">{{ doctor.user.fullname }} - <span class="fst-italic">({{ doctor.specialization }})</span></a>
+                        {{ dump(doctor) }}</li>
                     {% endfor %}
                 </ul>
             {% else%}
