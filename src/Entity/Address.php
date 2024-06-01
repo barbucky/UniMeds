@@ -6,6 +6,7 @@ use App\Repository\AddressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
@@ -16,12 +17,13 @@ class Address
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex('/^[a-zA-Z0-9-_.,\']*$/', message: "Ce champ ne peut contenir que des lettres, des chiffres ou les caractères _ - , . ' ")]
     private ?string $street_name = null;
 
     #[ORM\Column(length: 50)]
     private ?string $city_name = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 5)]
     private ?string $postal_code = null;
 
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'address')]

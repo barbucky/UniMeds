@@ -24,6 +24,7 @@
             <div class="col-6 border border-primary rounded-1 mt-5">
                 <h1 class="text-center mb-5">Créez votre compte professionnel</h1>
                 {{ form_start(form)}}
+                {{ form_errors(form) }}
 
                 <div class="Form-group">
                     {{ form_row(form.Civility.sexe) }}
@@ -45,7 +46,7 @@
                     {{ form_widget(form.Address.city_name, {'attr':{'style':'display:none', 'value':'OK'}}) }}
                 </div>
                 <div class="Form-group">
-                    {{ form_widget(form.Address.postal_code, {'attr':{'style':'display:none', 'value':'OK'}}) }}
+                    {{ form_widget(form.Address.postal_code, {'attr':{'style':'display:none', 'value':'OKiOK'}}) }}
                 </div>
                 <div class="Form-group">
                     {{ form_row(form.email) }}

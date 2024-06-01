@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Address;
-use App\Entity\Civility;
-use App\Entity\Doctor;
 use App\Entity\User;
 use App\Form\UserPasswordType;
 use App\Form\UserType;
@@ -43,11 +40,11 @@ class UserController extends AbstractController
 
         # Passer la requête au formulaire pour traitement
         $form->handleRequest($request);
-        dd($user);
 
 
         # Traitement du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
+
             $civility=$user->getCivility();
             $address=$user->getAddress();
             $patient=$user->getPatient();
@@ -61,20 +58,20 @@ class UserController extends AbstractController
              * strip_tags: Supprime les balises éventuellement intégrées dans la balse
              * */
             $last_name=$user->getLastName();
-            $last_name=strtoupper(addslashes(htmlspecialchars(trim(strip_tags($last_name)))));
+            $last_name=strtoupper(strip_tags($last_name));
             $user->setLastName($last_name);
 
             $first_name=$user->getFirstName();
-            $first_name=ucwords(addslashes(htmlspecialchars(trim(strip_tags($first_name)))),"\ \-");
+            $first_name=ucwords(strip_tags($first_name),"\ \-");
             $user->setFirstName($first_name);
             $user->setFullName($first_name.' '.$last_name);
 
             $street_name = $address->getStreetName();
-            $street_name= addslashes(htmlspecialchars(trim(strip_tags($street_name))));
+            $street_name= strip_tags($street_name);
             $address->setStreetName($street_name);
 
             $city_name = $address->getCityName();
-            $city_name= addslashes(htmlspecialchars(trim(strip_tags($city_name))));
+            $city_name= strip_tags($city_name);
             $address->setStreetName($city_name);
 
 
@@ -114,17 +111,20 @@ class UserController extends AbstractController
 
 
 
-
         $user->setRoles(['ROLE_USER', 'ROLE_DOC']);
         $form = $this->createForm(UserType::class, $user);
         $form->remove('Patient');
 
 
+
         $form->handleRequest($req);
+
 
 
         # Traitement du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
+            dd($user);
+
             $civility = $user->getCivility();
             $address = $user->getAddress();
             $doc = $user->getDoctor();
@@ -141,16 +141,16 @@ class UserController extends AbstractController
              * strip_tags: Supprime les balises éventuellement intégrées dans la balise
              * */
             $last_name = $user->getLastName();
-            $last_name = strtoupper(addslashes(htmlspecialchars(trim(strip_tags($last_name)))));
+            $last_name = strtoupper(strip_tags($last_name));
             $user->setLastName($last_name);
 
             $first_name = $user->getFirstName();
-            $first_name = ucwords(addslashes(htmlspecialchars(trim(strip_tags($first_name)))), "\ \-");
+            $first_name = ucwords(strip_tags($first_name), "\ \-");
             $user->setFirstName($first_name);
             $user->setFullName($first_name.' '.$last_name);
 
             $spe = $doc->getSpecialization();
-            $doc ->setSpecialization(strtoupper(addslashes(htmlspecialchars(trim(strip_tags($spe))))));
+            $doc ->setSpecialization(strtoupper(strip_tags($spe)));
 
             $address->setStreetName($street_name);
             $address->setCityName($city_name);
@@ -173,12 +173,15 @@ class UserController extends AbstractController
             $em->flush();
 
             # Message de validation
-            $this->addFlash('success', 'Votre compte a bien été créé. Vous pouvez désormais vous connecter!');
+            $this->addFlash('success', 'Votre compte professionnel a bien été créé. Vous pouvez désormais vous connecter!');
 
             # Redirection
             return $this->redirectToRoute('app_login');
 
 
+        }
+        else{
+            echo "Y a un souci";
         }
         #Passage du formulaire à la vue
         return $this->render('user/registerDoc.html.twig', [

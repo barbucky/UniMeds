@@ -9,6 +9,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class DoctorType extends AbstractType
 {
@@ -16,7 +18,11 @@ class DoctorType extends AbstractType
     {
         $builder
             ->add('specialization',TextType::class, [
-                'label'=>'Spécialisation'
+                'label'=>'Spécialisation',
+                'constraints'=>[
+                    new Regex('/^[a-zA-Zéè\'-]*$/', message: "Ce champ ne peut contenir que des lettres et les caractères - ou '"),
+                    new Length(min: 3,minMessage: "Ce champ doit contenir au moins 3 caractères")
+                ]
             ])
 
 

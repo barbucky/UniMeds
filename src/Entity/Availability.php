@@ -14,7 +14,7 @@ class Availability
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_availabilty = null;
 
     #[ORM\Column]
@@ -23,6 +23,9 @@ class Availability
     #[ORM\ManyToOne(inversedBy: 'availabilities')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Doctor $doctor = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $start_hour = null;
 
     public function getId(): ?int
     {
@@ -61,6 +64,18 @@ class Availability
     public function setDoctor(?Doctor $doctor): static
     {
         $this->doctor = $doctor;
+
+        return $this;
+    }
+
+    public function getStartHour(): ?\DateTimeInterface
+    {
+        return $this->start_hour;
+    }
+
+    public function setStartHour(\DateTimeInterface $start_hour): static
+    {
+        $this->start_hour = $start_hour;
 
         return $this;
     }

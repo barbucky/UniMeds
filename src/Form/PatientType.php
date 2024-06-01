@@ -28,7 +28,7 @@ class PatientType extends AbstractType
             ->add('social_security_number', TextType::class, [
                 'label'=> 'N° de sécurité social',
                 'constraints' => [
-                    new Length(min: 15, max: 15, minMessage:'Ce champ doit contenir 15 caractères', maxMessage: 'Ce champ doit contenir 15 caractères'),
+                    new Length(min: 15, max: 15, exactMessage:'Ce champ doit contenir 15 caractères'),
                     new Regex('/^[0-9]+$/',message: 'Ce champ ne peut contenir que des chiffres')]
             ]);
     }

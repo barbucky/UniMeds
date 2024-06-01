@@ -41,6 +41,15 @@ class DoctorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             /** @var User $user */
             $user=$form->getData();
+
+            $last_name=$user->getLastName();
+            $last_name=strtoupper(strip_tags($last_name));
+            $user->setLastName($last_name);
+
+            $first_name=$user->getFirstName();
+            $first_name=ucwords(strip_tags($first_name),"\ \-");
+            $user->setFirstName($first_name);
+            
             $user->setUpdatedAt(new \DateTimeImmutable());
 
             $em->persist($user);

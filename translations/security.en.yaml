@@ -1,2 +1,3 @@
 "Invalid credentials.": "Votre login et/ou votre mot de passe n'ont pas été reconnus, veuillez réessayer."
 "Too many failed login attempts, please try again in %minutes% minutes.": "Par sécurité, votre compte est suspendu pendant 2 min en raison de  3 échecs de connexion consécutifs."
+"This value should have exactly 15 characters.": "Ce champ doit contenir exactement 15 caractères."
