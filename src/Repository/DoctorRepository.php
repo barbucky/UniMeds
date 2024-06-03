@@ -42,7 +42,7 @@ class DoctorRepository extends ServiceEntityRepository
      public function findBySearch(SearchData $searchData)
     {
         $doctors = $this->createQueryBuilder('p');
-            #->addOrderBy('p.','ASC');
+
         if(!empty($searchData)){
 
             $doctors = $doctors
@@ -53,6 +53,8 @@ class DoctorRepository extends ServiceEntityRepository
                 ->orWhere('user.fullName LIKE :q')
                 ->setParameter('q',"%{$searchData}%");
         }
+        // Ajouter le tri par nom de famille croissant
+        $doctors = $doctors->orderBy('user.last_name', 'ASC');
 
 
         return $doctors

@@ -18,14 +18,14 @@ class AddressType extends AbstractType
             ->add('street_name', TextType::class,[
                 'label'=>'Rue',
                 'constraints'=>[
-                    new Regex('/^[a-zA-Z0-9-_.,\']*$/', message: "Ce champ ne peut contenir que des lettres, des chiffres ou les caractères _ - , . ' "),
+                    new Regex('/^[a-zA-Z0-9\s_.,\'-]*$/', message: "Ce champ ne peut contenir que des lettres, des chiffres ou les caractères _ - , . ' "),
                     new Length(min: 2,minMessage: "Ce champ doit contenir au moins 2 caractères")
                 ]
             ])
             ->add('city_name', TextType::class,[
                 'label'=>'Ville',
                 'constraints'=>[
-                    new Regex('/^[a-zA-Z0-9-_.,\']*$/', message: "Ce champ ne peut contenir que des lettres, des chiffres ou les caractères _ - , . ' "),
+                    new Regex('/^[a-zA-Z0-9 _.,\'-]*$/', message: "Ce champ ne peut contenir que des lettres, des chiffres ou les caractères _ - , . ' "),
                     new Length(min: 1,minMessage: "Ce champ doit contenir au moins 1 caractères")
                 ]
             ])

@@ -49,6 +49,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # Protéger la page d'accueil
+        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        # Autoriser l'accès à la page de connexion
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # Le rôle ADMIN est nécessaire pour accéder à la route administration
         # - { path: ^/administration.html, roles: ROLE_ADMIN }
         # Le rôle DOC est nécessaire pour accéder à la route /Doctor

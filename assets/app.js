@@ -7,3 +7,14 @@
  */
 
 
+$(document).ready(function () {
+    $('#appointment_date_of_appointment').change(function () {
+        updateAppointments();
+        
+    })
+});
+
+function updateAppointments() {
+    let SelectDate = $('#appointment_date_of_appointment').val();
+    
+}

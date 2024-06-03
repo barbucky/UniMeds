@@ -25,7 +25,7 @@
         </div>
         {% if not is_granted("ROLE_DOC") %}
         <div class="d-flex justify-content-center">
-            <a href="{{ path('doc_appointement',{'id':id}) }}"><button class="btn btn-success">Prendre rendez-vous</button></a>
+            <a href="{{ path('doc_appointement',{'id':id}) }}"><button class="btn vali">Prendre rendez-vous</button></a>
         </div>
         {% endif %}
 

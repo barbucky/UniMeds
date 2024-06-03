@@ -17,7 +17,8 @@ class Address
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex('/^[a-zA-Z0-9-_.,\']*$/', message: "Ce champ ne peut contenir que des lettres, des chiffres ou les caractères _ - , . ' ")]
+    #[Assert\Length(min:2, minMessage: "Ce champ doit contenir au moins 2 caractères" )]
+    #[Assert\Regex('/^[a-zA-Z0-9\s_.,\'-]*$/', message: "Ce champ ne peut contenir que des lettres, des chiffres ou les caractères _ - , . ' ")]
     private ?string $street_name = null;
 
     #[ORM\Column(length: 50)]

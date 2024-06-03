@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix du rendez-vous{% endblock %}
+{% block body %}
+    <div class="container py-3">
+        <h3 class="text-center">Choisissez un rendez-vous avec le Dr. {{ nomDoc }}</h3>
+        <div class="col-6 mx-auto border rounded shadow p-3 my-3 ">
+            <form class="infosForm" action="" method="post">
+
+                {{ form_start(form) }}
+                <div class="Form-group ">
+                    {{ form_row(form.date_of_appointment,{'attr': {'id':'appointment_date'}}) }}
+                </div>
+                <div class="Form-group ">
+                    {{ form_row(form.start_hour) }}
+                </div>
+
+
+                {# Popup #}
+                {#  <div class="modal fade" id="popup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="popupLabel">Réservation de votre rendez-vous</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Vous êtes sur le point de réserver le créneau du {{ form.date_of_appointment.vars.value | date('d/m/y')}} à 15h
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary submit">Understood</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+                #}
+
+
+                <button type="submit" class="btn vali" data-bs-toggle="modal" data-bs-target="#popup">Sélectionnez</button>
+                {{ form_end(form) }}
+
+
+
+
+
+            </form>
+            {# <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-success w-50">Valider</button>
+        </div> #}
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+

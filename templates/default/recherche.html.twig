@@ -5,25 +5,27 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="container py-3">
-        <h3 class="text-center">Recherche de professionnels de santé</h3>
-        <div class="col-6 mx-auto mt-3 py-2 border rounded">
+    <main>
+        <div class="container py-3">
+            <h3 class="text-center">Recherche de professionnels de santé</h3>
+            <div class="col-6 mx-auto mt-3 py-2 border rounded">
 
 
-            {% if docs is not empty %}
+                {% if docs is not empty %}
 
-                <ul>
-                    {%for doctor in docs %}
-                        <li class="mb-2 linkDoc">
-                            <a href="{{ path('doc_presentation',{'id':doctor.id})}}">{{ doctor.user.fullname }} - <span class="fst-italic">({{ doctor.specialization }})</span></a>
-                        {{ dump(doctor) }}</li>
-                    {% endfor %}
-                </ul>
-            {% else%}
-                <p class="text-center">Il n' y a pas de résultat pour votre recherche</p>
-            {% endif %}
+                    <ul>
+                        {%for doctor in docs %}
+                            <li class="mb-2 linkDoc">
+                                <a href="{{ path('doc_presentation',{'id':doctor.id})}}">{{ doctor.user.fullname }} - <span class="fst-italic">({{ doctor.specialization }})</span></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else%}
+                    <p class="text-center">Il n' y a pas de résultat pour votre recherche</p>
+                {% endif %}
+            </div>
         </div>
-    </div>
+    </main>
 
 
 {% endblock %}

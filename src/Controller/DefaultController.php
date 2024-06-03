@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Form\SearchType;
 use App\Model\SearchData;
 use App\Repository\DoctorRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,5 +37,6 @@ class DefaultController extends AbstractController
         ]);
 
     }
+
 
 }

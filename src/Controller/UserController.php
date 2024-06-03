@@ -123,7 +123,6 @@ class UserController extends AbstractController
 
         # Traitement du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($user);
 
             $civility = $user->getCivility();
             $address = $user->getAddress();
