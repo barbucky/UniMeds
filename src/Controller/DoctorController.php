@@ -19,13 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DoctorController extends AbstractController
 {
-    #[Route('/mon_compte/Doctor.html', name: 'Doctor')]
+    #[Route('/mon_compte/Doctor.html', name: 'app_doctor_doctorhome')]
     public function doctorHome():Response
     {
         return $this->render('/doctor/doctorhome.html.twig');
 
     }
-    #[Route('/mon_compte/Doctor/modification.html', name: 'DoctorUpdate')]
+    #[Route('/mon_compte/Doctor/modification.html', name: 'app_doctor_doctorUpdate')]
     public function editDoctor(Request $request, EntityManagerInterface $em):Response
     {
         $user = $this->getUser();
@@ -78,7 +78,7 @@ class DoctorController extends AbstractController
     }
 
 
-    #[Route('/Doctor/myAppointments.html', name: 'doc_myAppointments')]
+    #[Route('/Doctor/myAppointments.html', name: 'app_doctor_myAppointments')]
     public function appointmentManagement(AppointmentRepository $appointmentRepository):Response
     {
 
@@ -92,7 +92,7 @@ class DoctorController extends AbstractController
         ]);
 
     }
-    #[Route('/Doctor/myAppointments/{id}/Accept.html', name: 'accept_appointment')]
+    #[Route('/Doctor/myAppointments/{id}/Accept.html', name: 'app_doctor_acceptappointment')]
     public function acceptAppointment(Appointment $appointment, EntityManagerInterface $entityManager): RedirectResponse
     {
         $appointment->setStatus('Accepted');
@@ -102,7 +102,7 @@ class DoctorController extends AbstractController
         return $this->redirectToRoute('doc_myAppointments');
     }
 
-    #[Route('/Doctor/myAppointments/{id}/Refus.html', name: 'refuse_appointment')]
+    #[Route('/Doctor/myAppointments/{id}/Refus.html', name: 'app_doctor_refuse_appointment')]
     public function refusAppointment(Appointment $appointment, EntityManagerInterface $entityManager): RedirectResponse
     {
         $appointment->setStatus('Refus');

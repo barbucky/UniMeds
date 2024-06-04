@@ -37,16 +37,22 @@ class DefaultController extends AbstractController
         ]);
 
     }
-    #[Route('/rgpd.html', name: 'RGPD')]
-    public function rgpd():Response
-    {
-        return $this->render('default/rgpd.html.twig');
-    }
-
-    #[Route('/contact.html', name: 'Contact')]
+    #[Route('/contact.html', name: 'app_default_contact')]
     public function contact():Response
     {
         return $this->render('default/contact.html.twig');
+    }
+
+    #[Route('/about.html', name: 'app_default_about')]
+    public function about():Response
+    {
+        return $this->render('default/about.html.twig');
+    }
+
+    #[Route('/rgpd.html', name: 'app_default_rgpd')]
+    public function rgpd():Response
+    {
+        return $this->render('default/rgpd.html.twig');
     }
 
 

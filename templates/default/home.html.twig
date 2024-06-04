@@ -23,13 +23,23 @@
             </div>
         </div>
         {{ form_end(form) }}
-        <article class="Cadre text-center  mt-3 mx-5">
-            <h2>Réservez votre rendez-vous médical</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cupiditate deleniti distinctio dolores error esse ex fuga harum illo nam nisi, perspiciatis placeat qui saepe tenetur! Eos mollitia nisi reiciendis!</p>
+        <article class="Cadre text-center mt-3 mx-5">
+                <h2>Réservez votre rendez-vous médical</h2>
+                <p class="text-decoration-underline">Prenez rendez-vous avec un médecin en toute simplicité: </p>
+                <ul class="list-unstyled">
+                    <li>1. Commencez par <span>rechercher votre médecin</span> dans la barre de recherche.</li>
+                    <li>2. Consultez les informations professionnelles de votre docteur puis cliquez sur <span>"Prendre rendez-vous"</span>.</li>
+                    <li>3. Sélectionnez votre créneau, et le tour est joué!</li>
+                </ul>
+
         </article>
         <article class="Cadre text-center mt-3 mx-5">
             <h2>Qui sommes nous?</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cupiditate deleniti distinctio dolores error esse ex fuga harum illo nam nisi, perspiciatis placeat qui saepe tenetur! Eos mollitia nisi reiciendis!</p>
+            <p>Nous sommes un collectif de soignants qui a décidé de se lever contre la situation précaire offerte par les déserts médicaux.<br/>
+                Car il n'est pas acceptable de ne pas avoir accès aux soins, nous agissons.<br/>
+                Nous croyons à la santé pour tous.<br/>
+                Nous sommes <span>UniMeds</span>.
+            </p>
             <div id="slider" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#slider" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -73,7 +83,11 @@
         </article>
         <article class="Cadre text-center my-3 mx-5">
             <h2>Rejoignez nous!</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cupiditate deleniti distinctio dolores error esse ex fuga harum illo nam nisi, perspiciatis placeat qui saepe tenetur! Eos mollitia nisi reiciendis!</p>
+            <p>
+                Si vous ou un de vos proches vous retrouvez dans les valeurs de notre collectif, alors n'hésitez plus et rejoignez nous!<br/>
+                <a href="{{ path('app_inscription_doc') }}">Rejoignez-nous!</a>
+                
+            </p>
         </article>
     </main>
 {% endblock %}
