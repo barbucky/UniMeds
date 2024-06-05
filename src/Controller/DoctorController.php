@@ -19,13 +19,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DoctorController extends AbstractController
 {
-    #[Route('/mon_compte/Doctor.html', name: 'app_doctor_doctorhome')]
+    #[Route('/Doctor/mon_compte.html', name: 'app_doctor_doctorhome')]
     public function doctorHome():Response
     {
         return $this->render('/doctor/doctorhome.html.twig');
 
     }
-    #[Route('/mon_compte/Doctor/modification.html', name: 'app_doctor_doctorUpdate')]
+    #[Route('/Doctor/mon_compte/modification.html', name: 'app_doctor_doctorUpdate')]
     public function editDoctor(Request $request, EntityManagerInterface $em):Response
     {
         $user = $this->getUser();
@@ -57,7 +57,7 @@ class DoctorController extends AbstractController
 
             $this->addFlash('success','Votre profil a bien été mis à jour');
 
-            return $this->redirectToRoute('Doctor');
+            return $this->redirectToRoute('app_doctor_doctorhome');
 
         }
 
@@ -99,7 +99,7 @@ class DoctorController extends AbstractController
         $entityManager->persist($appointment);
         $entityManager->flush();
         $this->addFlash('success','Le rendez vous est accepté');
-        return $this->redirectToRoute('doc_myAppointments');
+        return $this->redirectToRoute('app_doctor_myAppointments');
     }
 
     #[Route('/Doctor/myAppointments/{id}/Refus.html', name: 'app_doctor_refuse_appointment')]
@@ -109,7 +109,7 @@ class DoctorController extends AbstractController
         $entityManager->persist($appointment);
         $entityManager->flush();
         $this->addFlash('success','Le rendez vous est refusé');
-        return $this->redirectToRoute('doc_myAppointments');
+        return $this->redirectToRoute('app_doctor_myAppointments');
     }
 
 }

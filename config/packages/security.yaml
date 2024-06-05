@@ -6,9 +6,9 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         app_user_provider:
-                entity:
-                    class: App\Entity\User
-                    property: email
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -22,10 +22,10 @@ security:
                 # where to redirect after logout
                 target: app_login
 
-            remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 604800
-                path: /
+            #remember_me:
+                #secret: '%kernel.secret%'
+                #lifetime: 604800
+                #path: /
                 #always_remember_me: true
 
 
@@ -49,16 +49,17 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # Protéger la page d'accueil
-        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
-        # Autoriser l'accès à la page de connexion
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # Le rôle ADMIN est nécessaire pour accéder à la route administration
-        # - { path: ^/administration.html, roles: ROLE_ADMIN }
-        # Le rôle DOC est nécessaire pour accéder à la route /Doctor
-        # - { path: ^/mon_compte/Doctor, roles: ROLE_DOC }
-        # Le rôle USER est nécessaire pour accéder à la route /Patient
-        # - { path: ^/mon_compte/Patient, roles: ROLE_USER }
+
+    # Autoriser l'accès à la page de connexion
+    #- { path: ^/connexion.html, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    # Le rôle ADMIN est nécessaire pour accéder à la route administration
+        #- { path: ^/administration, roles: ROLE_ADMIN }
+    # Le rôle DOC est nécessaire pour accéder à la route /Doctor
+    # - { path: ^/Doctor/mon_compte, roles: ROLE_DOC }
+    # Le rôle USER est nécessaire pour accéder à la route /Patient
+    # - { path: ^/Patient/mon_compte, roles: ROLE_USER }
+    # Protéger la page d'accueil
+        #- { path: ^/, roles: ROLE_USER }
 
 
 when@test:

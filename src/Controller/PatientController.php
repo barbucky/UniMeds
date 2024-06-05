@@ -17,14 +17,14 @@ use function Symfony\Component\Clock\now;
 
 class PatientController extends AbstractController
 {
-    #[Route('/mon_compte/Patient.html',name:'app_patient_patienthome')]
+    #[Route('/Patient/mon_compte.html',name:'app_patient_patienthome')]
     public function patientHome():Response
     {
         return $this->render('patient/patienthome.html.twig');
 
     }
 
-    #[Route('/mon_compte/Patient/modification.html',name: 'app_patient_patientUpdate')]
+    #[Route('/Patient/mon_compte/modification.html',name: 'app_patient_patientUpdate')]
     public function editPatient(Request $request, EntityManagerInterface $em):Response
     {
 

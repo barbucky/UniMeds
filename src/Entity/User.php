@@ -33,14 +33,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 64)]
     /*
     * Regex pour les conditions que j'ai imposées pour le mot de passe:
-    * mini 1 Maj
+    * mini 1 Maj, 1 mini, 1 chiffre, 1 caractère spécial
     * mini 12 caractères
     *
     * */
-    /*#[Assert\Regex(
+    #[Assert\Regex(
         '/^(?=.*[!@#$%^&*-_])(?=.*[0-9])(?=.*[A-Z]).{12,}$/',
-        message: "Le mot de passe doit être composé d'au moins 12 caractères et contenir au moins: 1 majuscule, 1 chiffre et un caractère spécial")]
-    */
+        message: "Le mot de passe doit être composé d'au moins 12 caractères et contenir au moins: 1 minuscule, 1 majuscule, 1 chiffre et un caractère spécial")]
+
     private ?string $password = null;
 
     #[ORM\Column]

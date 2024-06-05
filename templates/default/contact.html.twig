@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <body>
         <div class="container-fluid d-flex justify-content-center align-items-end flex-grow-1">
             <div class="contact-content">
                 <p class="text-center ">contact@unimeds.online</p>
                 <p class="text-center">Tél: 0122222222 - Clinique du renouveau 59720 LOUVROIL</p>
-                <button class="btn vali w-50 mx-auto">Rejoignez-nous!</button>
+                <a href="{{ path('app_inscription_doc') }}"><button class="btn vali w-50 mx-auto">Rejoignez-nous!</button></a>
             </div>
         </div>
-    </body>
 
 {% endblock %}
 
